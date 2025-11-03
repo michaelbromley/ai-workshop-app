@@ -1,5 +1,5 @@
 import { Server as SocketServer, Socket } from 'socket.io';
-import type { ServerToClientEvents, ClientToServerEvents } from '../../shared/types.js';
+import type { ServerToClientEvents, ClientToServerEvents } from './shared/types.js';
 import * as db from './db.js';
 
 type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents>;

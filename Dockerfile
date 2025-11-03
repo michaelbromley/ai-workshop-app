@@ -19,18 +19,21 @@ RUN npm run build
 # Stage 2: Build server
 FROM node:20-alpine AS server-builder
 
-WORKDIR /app/server
+WORKDIR /app
 
 # Copy server package files
-COPY server/package*.json ./
-RUN npm ci
+COPY server/package*.json ./server/
+RUN cd server && npm ci
 
-# Copy server source and shared types
-COPY server/ ./
-COPY shared/ ../shared/
+# Copy server source (excluding the symlink)
+COPY server/src/ ./server/src/
+COPY server/tsconfig*.json ./server/
+
+# Copy shared types into server src (overwriting any symlink)
+COPY shared/ ./server/src/shared/
 
 # Build server
-RUN npm run build
+RUN cd server && npm run build
 
 # Stage 3: Production
 FROM node:20-alpine AS production

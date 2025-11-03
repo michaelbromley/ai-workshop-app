@@ -4,7 +4,7 @@ import { Server as SocketServer } from 'socket.io';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { setupSocketHandlers } from './socket.js';
-import type { ServerToClientEvents, ClientToServerEvents } from '../../shared/types.js';
+import type { ServerToClientEvents, ClientToServerEvents } from './shared/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,20 +23,20 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 
+// Health check endpoint
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // Serve static files from the client build in production
 if (process.env.NODE_ENV === 'production') {
-  const clientBuildPath = path.join(__dirname, '../../client/dist');
+  const clientBuildPath = path.join(__dirname, '../client/dist');
   app.use(express.static(clientBuildPath));
 
   app.get('*', (_req, res) => {
     res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
-
-// Health check endpoint
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
-});
 
 // Setup Socket.io handlers
 setupSocketHandlers(io);

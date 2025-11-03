@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { Question, Answer } from '../../shared/types.js';
+import { Question, Answer } from './shared/types.js';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { fileURLToPath } from 'url';

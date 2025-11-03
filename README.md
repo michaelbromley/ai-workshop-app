@@ -58,6 +58,7 @@ A real-time collaborative Q&A application for interactive workshops and presenta
    ```bash
    npm run install:all
    ```
+   This will install dependencies and automatically set up the required symlink for shared types.
 
 2. **Start development servers**:
    ```bash

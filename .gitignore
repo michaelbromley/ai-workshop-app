@@ -38,3 +38,6 @@ logs/
 coverage/
 .nyc_output/
 /data
+
+# Symlinks
+server/src/shared
